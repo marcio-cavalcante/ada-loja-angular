@@ -1,0 +1,21 @@
+.page-content {
+  flex: 1;
+  background-color: #fff;
+  padding: 2em;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.page-content h1 {
+  font-size: 1.6em;
+  margin-bottom: 1em;
+  color: #4e54c8;
+}
+
+.page-content p {
+  font-size: 1.05em;
+  line-height: 1.8;
+  margin-bottom: 1.2em;
+  color: #333;
+
+}

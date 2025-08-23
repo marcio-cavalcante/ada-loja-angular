@@ -1,0 +1,34 @@
+<div class="container">
+  <aside>
+    <nav class="side-menu">
+      <strong>Categorias</strong>
+      <ul>
+        <li
+          *ngFor="let category of categories"
+          (click)="filterByCategory(category)"
+        >
+          <a>{{ category }}</a>
+        </li>
+        <li (click)="filterByCategory('Todos')"><a>Todos</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main>
+    <section>
+      <h1>Bem-vindo à nossa loja!</h1>
+
+      <div class="product-grid">
+        <div class="product-card" *ngFor="let product of filteredProducts">
+          <div class="image-wrapper">
+            <img [src]="product.image" />
+          </div>
+          <div class="product-info">
+            <h2><a [routerLink]="['/home/product', product.id]">{{ product.title }}</a></h2>
+            <p class="price">{{ product.price | currency : "R$" }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

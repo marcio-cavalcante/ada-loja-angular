@@ -1,0 +1,47 @@
+.page-content {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.page-content h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.page-content img {
+  max-width: 30%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.page-content p {
+  font-size: 1.1rem;
+  margin: 10px 0;
+  color: #555;
+}
+
+.page-content strong {
+  color: #222;
+}
+
+@media (max-width: 600px) {
+  .page-content {
+    padding: 15px;
+  }
+
+  .page-content h1 {
+    font-size: 1.5rem;
+  }
+
+  .page-content p {
+    font-size: 1rem;
+  }
+}

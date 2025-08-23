@@ -1,0 +1,8 @@
+<div class="page-content" *ngIf="product">
+  <h1>{{ product.title }}</h1>
+  <img [src]="product.image" alt="{{ product.title }}" />
+  <p><strong>Categoria:</strong> {{ product.category }}</p>
+  <p><strong>Preço:</strong> {{ product.price | currency:'R$' }}</p>
+  <p><strong>Descrição:</strong> {{ product.description }}</p>
+  <button (click)="addToCart()">Adicionar ao Carrinho</button>
+</div>
