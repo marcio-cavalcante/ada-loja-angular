@@ -1,6 +1,7 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +17,12 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './pages/login/login.component';
 import { UserManagerComponent } from './pages/admin/user-manager/user-manager.component';
+import { JwtModule } from '@auth0/angular-jwt';
+import { ProductManagerComponent } from './pages/admin/product-manager/product-manager.component';
+
+import localePt from '@angular/common/locales/pt';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localePt);
 
 @NgModule({
   declarations: [
@@ -28,15 +35,28 @@ import { UserManagerComponent } from './pages/admin/user-manager/user-manager.co
     CartComponent,
     AdminComponent,
     LoginComponent,
-    UserManagerComponent
+    UserManagerComponent,
+    ProductManagerComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('token');
+        },
+        allowedDomains: ['fakestoreapi.com'],
+        disallowedRoutes: [],
+      },
+    }),
   ],
-  providers: [],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'pt-BR' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

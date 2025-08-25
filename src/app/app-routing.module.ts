@@ -13,9 +13,9 @@ import { LoginComponent } from './pages/login/login.component'
 import { AuthGuard } from './guards/auth.guard';
 
 import { UserManagerComponent } from './pages/admin/user-manager/user-manager.component'
+import { ProductManagerComponent } from './pages/admin/product-manager/product-manager.component'
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
   { path: '', redirectTo: 'home/products', pathMatch: 'full' },
   { path: 'home',
     component: HomeComponent,
@@ -25,9 +25,11 @@ const routes: Routes = [
       { path: 'about', component: AboutComponent },
       { path: 'contact', component: ContactComponent },
       { path: 'cart', component: CartComponent },
+      { path: 'login', component: LoginComponent },
       { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], 
         children: [
-          { path: 'user-manager', component: UserManagerComponent }
+          { path: 'user-manager', component: UserManagerComponent },
+          { path: 'product-manager', component: ProductManagerComponent }
       ]},
     ]
    },

@@ -3,7 +3,8 @@ import { UserService } from '../../../service/user.service';
 
 @Component({
   selector: 'app-user-manager',
-  templateUrl: './user-manager.component.html'
+  templateUrl: './user-manager.component.html',
+  styleUrls: ['./user-manager.component.css'],
 })
 export class UserManagerComponent implements OnInit {
   users: any[] = [];
@@ -12,25 +13,54 @@ export class UserManagerComponent implements OnInit {
     username: '',
     password: '',
     name: { firstname: '', lastname: '' },
-    address: { city: '', street: '', number: 0, zipcode: '', geolocation: { lat: '', long: '' } },
-    phone: ''
+    address: {
+      city: '',
+      street: '',
+      number: 0,
+      zipcode: '',
+      geolocation: { lat: '', long: '' },
+    },
+    phone: '',
   };
 
   constructor(private userService: UserService) {}
 
   ngOnInit() {
-    this.loadUsers();
-  }
-
-  loadUsers() {
-    this.userService.getUsers().subscribe(data => this.users = data);
+    this.userService.getUsers().subscribe((data) => (this.users = data));
   }
 
   addUser() {
-    this.userService.addUser(this.newUser).subscribe(() => this.loadUsers());
+    this.userService.addUser(this.newUser).subscribe(() => {
+      // Adição local
+      const newUserList = { ...this.newUser, id: this.generateLocalId() };
+      this.users.push(newUserList);
+
+      // Limpa o formulário
+      this.newUser = {
+        email: '',
+        username: '',
+        password: '',
+        name: { firstname: '', lastname: '' },
+        address: {
+          city: '',
+          street: '',
+          number: 0,
+          zipcode: '',
+          geolocation: { lat: '', long: '' },
+        },
+        phone: '',
+      };
+    });
+  }
+
+  generateLocalId(): number {
+    return this.users.length ? Math.max(...this.users.map((u) => u.id)) + 1 : 1;
   }
 
   deleteUser(id: number) {
-    this.userService.deleteUser(id).subscribe(() => this.loadUsers());
+    console.log('Deletando usuário com ID:', id);
+    this.userService.deleteUser(id).subscribe(() => {
+      this.users = this.users.filter((user) => user.id !== id);
+    });
   }
 }

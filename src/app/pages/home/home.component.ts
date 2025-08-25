@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 import { AuthService } from '../../service/auth.service';
 import { Router } from '@angular/router';
 
@@ -14,7 +13,8 @@ export class HomeComponent {
   constructor(public authService: AuthService, private router: Router) {}
 
   logout(): void {
+    alert('Clicado no logout! Usuário deslogado com sucesso!');
     this.authService.logout();
-    this.router.navigate(['/home/products']);
+    // this.router.navigate(['/home/products']);
   }
 }

@@ -1,81 +1,80 @@
 import { Injectable } from '@angular/core';
-
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { map, catchError, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { User } from '../models/user';
+
+interface LoginResponse {
+  token: string;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'https://fakestoreapi.com/auth/login';
+  private currentUserSubject: BehaviorSubject<User | null>;
+  public currentUser: Observable<User | null>;
+  private apiUrl = 'https://fakestoreapi.com/';
+  private jwtHelper = new JwtHelperService();
 
-  // private adminUsername = 'mor_2314';
-  // private adminPassword = '83r5^_';
-  // private token: string | null = null;
-  // private isAdminUser: boolean = false;
-
-  // Funcionalidade para obter o nome do usuário logado
-  private username: string = '';
-
-
-  constructor(private http: HttpClient) {}
-
-  login(credentials: { username: string; password: string }): Observable<any> {
-    return this.http.post(this.apiUrl, credentials).pipe(
-      tap((res: any) => {
-        localStorage.setItem('token', res.token);
-        localStorage.setItem('username', credentials.username);
-      })
+  constructor(private http: HttpClient, private router: Router) {
+    const storedUser = localStorage.getItem('currentUser');
+    this.currentUserSubject = new BehaviorSubject<User | null>(
+      storedUser ? JSON.parse(storedUser) : null
     );
+    this.currentUser = this.currentUserSubject.asObservable();
   }
 
-
-  // login(username: string, password: string): Observable<any> {
-  //   return this.http
-  //     .post<any>(`${this.apiUrl}auth/login`, { username, password })
-  //     .pipe(
-  //       tap((response) => {
-  //         this.token = response.token;
-
-
-          // Funcionalidade para obter o nome do usuário logado
-  //         this.username = username;
-
-  //         this.isAdminUser =
-  //           username === this.adminUsername && password === this.adminPassword;
-  //       })
-  //     );
-  // }
-
-  // getToken(): string | null {
-  //   return this.token;
-  // }
-
-
-  // Funcionalidade para obter o nome do usuário logado
-  getUsername(): string {
-    return this.username;
+  public get currentUserValue(): User | null {
+    return this.currentUserSubject.value;
   }
 
-
-
-  isAdmin(): boolean {
-    return localStorage.getItem('username') === 'mor_2314';
+  login(username: string, password: string): Observable<boolean> {
+    return this.http
+      .post<LoginResponse>(`${this.apiUrl}auth/login`, { username, password })
+      .pipe(
+        map((response) => {
+          if (response.token) {
+            const decodedToken = this.jwtHelper.decodeToken(response.token);
+            const user: User = {
+              id: decodedToken.sub || 0,
+              username: decodedToken.user || username,
+              email: decodedToken.email || `${username}@example.com`,
+              role: decodedToken.role || 'customer',
+            };
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            localStorage.setItem('token', response.token);
+            this.currentUserSubject.next(user);
+            return true;
+          }
+          return false;
+        }),
+        catchError((error) => {
+          console.error('Erro de login:', error);
+          return of(false);
+        })
+      );
   }
-
-
-  isAuthenticated(): boolean {
-    return !!localStorage.getItem('token');
-  }
-
-
-  // isLoggedIn(): boolean {
-  //   return this.getToken() !== null;
-  // }
 
   logout() {
+    localStorage.removeItem('currentUser');
     localStorage.removeItem('token');
-    localStorage.removeItem('username');
+    this.currentUserSubject.next(null);
+    this.router.navigate(['/home/products']);
   }
 
+  isLoggedIn(): boolean {
+    const token = localStorage.getItem('token');
+    return !this.jwtHelper.isTokenExpired(token);
+  }
+
+  isAdmin(): boolean {
+    return this.currentUserValue?.role === 'admin';
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
 }

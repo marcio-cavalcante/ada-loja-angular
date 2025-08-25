@@ -1,57 +1,87 @@
-import { Component } from '@angular/core';
-import { AuthService } from '../../service/auth.service';
-import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
+import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { AuthService } from "../../service/auth.service";
+
+interface LoginFormControls {
+    username: AbstractControl;
+    password: AbstractControl;
+}
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.css"],
 })
-export class LoginComponent {
-  username: string = '';
-  password: string = '';
-  errorMessage: string = '';
+export class LoginComponent implements OnInit {
+  loginForm!: FormGroup;
+  loading = false;
+  submitted = false;
+  error = "";
 
   constructor(
-    private authService: AuthService, 
-    private router: Router
-  ) {}
-
-
-
-//   ngOnInit(): void {
-//   if (this.authService.getToken()) {
-//     const destino = this.authService.isAdmin() ? '/home/products' : '/home/admin';
-//     alert('Usuário já autenticado. Redirecionando ao menu principal.');
-//     this.router.navigate([destino]);
-//   }
-// }
-
- login() {
-    this.authService.login({ username: this.username, password: this.password }).subscribe({
-      next: () => {
-        this.router.navigate(['/home/products']);
-      },
-      error: () => {
-        this.errorMessage = 'Usuário ou senha inválidos';
-      }
-    });
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private authService: AuthService
+  ) {
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(["/"]);
+    }
   }
 
+  ngOnInit() {
+    this.loginForm = this.formBuilder.group({
+        username: ["", Validators.required],
+        password: ["", Validators.required],
+    });
+    // Crentiais padrão para teste
+    // username: johnd
+    // password: m38rmF$
+    // Redireciona para a página inicial se já estiver logado
+    // if (this.authService.currentUserValue) {
+    //   this.router.navigate(["/"]);
+}
 
-  // onSubmit(): void {
-  //   this.authService.login(this.username, this.password).subscribe({
-  //     next: () => {
-  //       if (this.authService.isAdmin()) {
-  //         this.router.navigate(['/home/products']);
-  //       } else {
-  //         this.router.navigate(['/home/admin']);
-  //       }
-  //     },
-  //     error: () => {
-  //       this.errorMessage = 'Usuário ou senha inválidos.';
-  //     }
-  //   });
-  // }
+    // Pega a URL de retorno dos parâmetros de consulta ou define como padrão para '/'
+//     this.returnUrl = this.route.snapshot.queryParams["returnUrl"] || "/";
+//   }
 
+  // Conveniência para fácil acesso aos campos do formulário
+ get f(): { [key: string]: AbstractControl } {
+  return this.loginForm.controls;
+}
+
+  onSubmit() {
+    this.submitted = true;
+
+    // Para se o formulário for inválido
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    this.loading = true;
+
+    const username = this.loginForm.get('username')?.value;
+    const password = this.loginForm.get('password')?.value;
+
+    if (username || password) {
+        this.authService.login(username, password)
+        .subscribe({
+            next: (success) => {
+                if (success) {
+                    const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+                    this.router.navigate([returnUrl]);
+                } else {
+                    this.error = "Nome de usuário ou senha incorretos";
+                    this.loading = false;
+                }
+            },
+            error: (error) => {
+                this.error = "Erro ao tentar fazer login";
+                this.loading = false;
+            }
+        })
+    }
+}
 }

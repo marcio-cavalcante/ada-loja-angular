@@ -1,6 +1,16 @@
-<p>admin works!</p>
-<ul>
-    <li>
-        <a routerLink="/user-manager">Gestão de usuários</a>
-    </li>
-</ul>
+<div class="admin-content">
+
+<h2>Painel Administrativo</h2>
+<nav>
+    <ul>
+        <li>
+            <a routerLink="/home/admin/user-manager">Gestão de usuários</a>
+        </li>
+        <li>
+            <a routerLink="/home/admin/product-manager">Gestão de produtos</a>
+        </li>
+    </ul>
+</nav>
+<hr>
+<router-outlet></router-outlet>
+</div>

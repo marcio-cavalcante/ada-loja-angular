@@ -1,0 +1,40 @@
+.admin-content {
+  flex: 1;
+  background-color: #fff;
+  padding: 2em;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.admin-content h2 {
+  font-size: 1.6em;
+  margin-bottom: 1em;
+  color: #4e54c8;
+}
+
+.admin-content nav ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1em;
+  display: flex;
+  gap: 1.5em;
+}
+
+.admin-content nav ul li a {
+  text-decoration: none;
+  font-weight: 500;
+  color: #4e54c8;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.admin-content nav ul li a:hover {
+  background-color: #f0f0ff;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 1.5em 0;
+}

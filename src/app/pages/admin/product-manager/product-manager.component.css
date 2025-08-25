@@ -1,23 +1,23 @@
-.user-manager {
+.product-manager {
   background-color: #fff;
   padding: 2em;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0,0,0,0.05);
 }
 
-.user-manager h2,
-.user-manager h3 {
+.product-manager h2,
+.product-manager h3 {
   color: #4e54c8;
   margin-bottom: 1em;
 }
 
-.user-manager ul {
+.product-manager ul {
   list-style: none;
   padding: 0;
   margin-bottom: 2em;
 }
 
-.user-manager ul li {
+.product-manager ul li {
   background-color: #f9f9f9;
   padding: 0.8em 1em;
   margin-bottom: 0.5em;
@@ -27,7 +27,7 @@
   align-items: center;
 }
 
-.user-manager ul li button {
+.product-manager ul li button {
   background-color: #e74c3c;
   color: #fff;
   border: none;
@@ -37,25 +37,25 @@
   transition: background-color 0.3s ease;
 }
 
-.user-manager ul li button:hover {
+.product-manager ul li button:hover {
   background-color: #c0392b;
 }
 
-.user-manager form {
+.product-manager form {
   display: flex;
   flex-direction: column;
   gap: 1em;
   max-width: 400px;
 }
 
-.user-manager form input {
+.product-manager form input {
   padding: 0.6em;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1em;
 }
 
-.user-manager form button {
+.product-manager form button {
   background-color: #4e54c8;
   color: #fff;
   border: none;
@@ -66,6 +66,6 @@
   transition: background-color 0.3s ease;
 }
 
-.user-manager form button:hover {
+.product-manager form button:hover {
   background-color: #3b42a1;
 }

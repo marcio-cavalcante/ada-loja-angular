@@ -1,0 +1,80 @@
+.page-content {
+  flex: 1;
+  background-color: #fff;
+  padding: 2em;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Título principal do carrinho */
+.page-content h2 {
+  font-size: 1.6em;
+  margin-bottom: 1em;
+  color: #4e54c8;
+  font-weight: 600;
+}
+
+/* Informações gerais do carrinho */
+.page-content p {
+  font-size: 1.05em;
+  line-height: 1.8;
+  margin-bottom: 1.2em;
+  color: #333;
+}
+
+/* Separador visual */
+.page-content hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 1.5em 0;
+}
+
+/* Estilo dos itens no carrinho */
+.page-content .cart-item {
+  background-color: #f9f9f9;
+  border-radius: 6px;
+  padding: 1em;
+  margin-bottom: 1em;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease;
+}
+
+.page-content .cart-item:hover {
+  transform: scale(1.02);
+  background-color: #fff;
+}
+
+/* Texto do item */
+.page-content .cart-item p {
+  font-size: 1.05em;
+  font-weight: 500;
+  color: #222;
+  margin: 0;
+}
+
+/* Mensagem de carrinho vazio */
+.page-content .cart-empty {
+  text-align: center;
+  font-style: italic;
+  color: #999;
+  margin-top: 2em;
+}
+
+/* Responsivo para telas menores */
+@media (max-width: 600px) {
+  .page-content {
+    padding: 1.5em;
+  }
+
+  .page-content h2 {
+    font-size: 1.4em;
+  }
+
+  .page-content .cart-item {
+    padding: 0.8em;
+  }
+
+  .page-content .cart-item p {
+    font-size: 1em;
+  }
+}

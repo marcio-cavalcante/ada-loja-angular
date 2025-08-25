@@ -1,30 +1,31 @@
 <header>
-  <h1>ADA Loja</h1>
+  <h1 class="link-title"><a a routerLink="/home/products">ADA Loja</a></h1>
   <nav class="top-menu">
     <ul>
       <li><a routerLink="/home/products">Início</a></li>
       <li><a routerLink="/home/about">Sobre</a></li>
       <li><a routerLink="/home/contact">Contato</a></li>
-      <!-- <li><a routerLink="/home/login">Conta</a></li> -->
-
-
-
       <li><a routerLink="/home/cart">Carrinho</a></li>
-      <li><a routerLink="/home/admin">Administrativo</a></li>
 
-<!-- mostrar nome do usuário quando logado -->
-      <!-- <li *ngIf="authService.isLoggedIn()">Olá, {{ authService.getUsername() }}</li> -->
+      <!-- Exibição do link Administrativo somente para usuários administradores -->
+      <li *ngIf="authService.currentUser | async as user">
+        <a *ngIf="user.role" routerLink="/home/admin">Administrativo</a>
+      </li>
 
-<!-- Alteração de links para conta no caso de necessidade de login ou sair no caso de já estar logado -->
+      <!-- Mostra nome do usuário somente quando logado -->
+      <li *ngIf="authService.currentUser | async as user">
+        Olá, {{ user.username }}
+      </li>
+
+      <!-- Altera nome do link de login: "Conta" para usuário não logado, "Sair" para não logado -->
       <li>
-  <!-- <ng-container *ngIf="authService.isLoggedIn(); else loginLink">
-    <a (click)="logout()" style="cursor: pointer;">Sair</a>
-  </ng-container>
-  <ng-template #loginLink> -->
-    <a routerLink="/home/login">Conta</a>
-  <!-- </ng-template> -->
-</li>
-
+        <ng-container *ngIf="authService.isLoggedIn(); else loginLink">
+          <a (click)="logout()" style="cursor: pointer">Sair</a>
+        </ng-container>
+        <ng-template #loginLink>
+          <a routerLink="/home/login">Conta</a>
+        </ng-template>
+      </li>
     </ul>
   </nav>
 </header>
