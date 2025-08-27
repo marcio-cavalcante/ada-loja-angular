@@ -9,7 +9,7 @@
 
       <!-- Exibição do link Administrativo somente para usuários administradores -->
       <li *ngIf="authService.currentUser | async as user">
-        <a *ngIf="user.role" routerLink="/home/admin">Administrativo</a>
+        <a *ngIf="user.role === 'admin'" routerLink="/home/admin">Administrativo</a>
       </li>
 
       <!-- Mostra nome do usuário somente quando logado -->

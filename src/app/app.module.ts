@@ -11,15 +11,13 @@ import { ProductDetailComponent } from './pages/products/product-detail/product-
 import { AboutComponent } from './pages/about/about.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { CartComponent } from './pages/cart/cart.component';
-import { AdminComponent } from './pages/admin/admin.component';
 
 // Import para consumo da API
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './pages/login/login.component';
-import { UserManagerComponent } from './pages/admin/user-manager/user-manager.component';
 import { JwtModule } from '@auth0/angular-jwt';
-import { ProductManagerComponent } from './pages/admin/product-manager/product-manager.component';
 
+// Configuração para usar pt-BR no Angular
 import localePt from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
 registerLocaleData(localePt);
@@ -33,10 +31,7 @@ registerLocaleData(localePt);
     AboutComponent,
     ContactComponent,
     CartComponent,
-    AdminComponent,
     LoginComponent,
-    UserManagerComponent,
-    ProductManagerComponent
   ],
   imports: [
     BrowserModule,
@@ -54,9 +49,7 @@ registerLocaleData(localePt);
       },
     }),
   ],
-  providers: [
-    { provide: LOCALE_ID, useValue: 'pt-BR' }
-  ],
-  bootstrap: [AppComponent]
+  providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

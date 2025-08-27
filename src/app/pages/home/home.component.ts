@@ -15,6 +15,6 @@ export class HomeComponent {
   logout(): void {
     alert('Clicado no logout! Usuário deslogado com sucesso!');
     this.authService.logout();
-    // this.router.navigate(['/home/products']);
+    this.router.navigate(['/home/products']);
   }
 }

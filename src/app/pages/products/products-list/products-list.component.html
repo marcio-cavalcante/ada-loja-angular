@@ -24,7 +24,7 @@
             <img [src]="product.image" />
           </div>
           <div class="product-info">
-            <h2><a [routerLink]="['/home/product', product.id]">{{ product.title }}</a></h2>
+            <h2 class="product-title"><a [routerLink]="['/home/product', product.id]">{{ product.title }}</a></h2>
             <p class="price">{{ product.price | currency : "R$" }}</p>
           </div>
         </div>

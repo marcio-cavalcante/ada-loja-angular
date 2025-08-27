@@ -2,7 +2,8 @@
   <h2>Usuários</h2>
   <ul>
     <li *ngFor="let user of users">
-      Nome: {{ user.name.firstname }} {{ user.name.lastname }} - Usuário: {{ user.username }} - Email: {{ user.email }}
+      Nome: {{ user.name.firstname }} {{ user.name.lastname }} - Usuário:
+      {{ user.username }} - Email: {{ user.email }}
       <button (click)="deleteUser(user.id)">Remover</button>
     </li>
   </ul>

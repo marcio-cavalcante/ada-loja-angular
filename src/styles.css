@@ -17,3 +17,14 @@ body {
   padding: 2em;
   gap: 2em;
 }
+
+button {
+  background-color: #4e54c8;
+  color: white;
+  padding: 0.8em 1.2em;
+  border: none;
+  border-radius: 6px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
